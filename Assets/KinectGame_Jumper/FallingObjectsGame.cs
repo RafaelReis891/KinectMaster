@@ -137,7 +137,7 @@ public class FallingObjectsGame : MonoBehaviour
             {
                 if (respostaEscolhida.Value == pergunta.respostaCorreta)
                 {
-                    score++;
+                    score += Mathf.Abs(votosSim - votosNao);
                 }
             }
 
@@ -229,7 +229,7 @@ public class FallingObjectsGame : MonoBehaviour
 
         endPanel.SetActive(true);
         endScoreText.text =
-            $"Você acertou {score} de {perguntas.Count}";
+            $"Você obteve {score} pontos!";
     }
 }
 
