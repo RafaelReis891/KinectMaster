@@ -22,6 +22,13 @@ public class CustomerList
 {
     public List<Customer> customers = new();
 }
+[System.Serializable]
+public class RankingUI
+{
+    public TMP_Text name;
+    public TMP_Text score;
+}
+
 
 [RequireComponent(typeof(AudioSource))]
 public class FallingObjectsGame : MonoBehaviour
@@ -41,6 +48,7 @@ public class FallingObjectsGame : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text perguntaNumeroText;
     public TMP_Text rankingLabel;
+    public List<RankingUI> rankingUIs = new List<RankingUI>();
 
     [Header("Prefabs")]
     public List<GameObject> prefabs;
@@ -155,11 +163,20 @@ public class FallingObjectsGame : MonoBehaviour
 
     public void SetUICustomers()
     {
-        rankingLabel.text = "";
-        for (int i = 0; i < topCustomers.Count; i++)
+        for (int i = 0; i < rankingUIs.Count; i++)
         {
-            Customer c = topCustomers[i];
-            rankingLabel.text += $"{i + 1}º | {c._name} | {c.score} pts | {c.date}\n";
+            if (i < topCustomers.Count)
+            {
+                Customer c = topCustomers[i];
+
+                rankingUIs[i].name.text = c._name;
+                rankingUIs[i].score.text = c.score.ToString();
+            }
+            else
+            {
+                rankingUIs[i].name.text = "";
+                rankingUIs[i].score.text = "";
+            }
         }
     }
 
@@ -370,7 +387,7 @@ public class FallingObjectsGame : MonoBehaviour
 
             // 8. preencher endScoreText
             endScoreText.text =
-                $"Ranking: {ranking}º | Nome: {currentCustomer._name} | Pontos: {currentCustomer.score} | Data: {currentCustomer.date}";
+                $"Ranking: {ranking}º | Nome: {currentCustomer._name} | Pontos: {currentCustomer.score}";
         }
 
         // 9. chamar Restart()
