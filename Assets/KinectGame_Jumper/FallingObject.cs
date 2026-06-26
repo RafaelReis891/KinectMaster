@@ -10,6 +10,8 @@ public class FallingObject : MonoBehaviour
     public FallingObjectsGame manager;
 
     private RectTransform rect;
+
+    float timer;
     private RectTransform canvasRect;
 
     void Start()
@@ -23,7 +25,9 @@ public class FallingObject : MonoBehaviour
         rect.anchoredPosition += Vector2.down * speed * Time.deltaTime;
 
         // Saiu da tela (abaixo)
-        if (rect.anchoredPosition.y < -Screen.height)
+        if (timer < 20)
+        timer =+ Time.deltaTime;
+        else
         {
             Destroy(gameObject);
         }
